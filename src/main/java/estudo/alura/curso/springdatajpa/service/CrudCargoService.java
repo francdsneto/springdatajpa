@@ -60,26 +60,14 @@ public class CrudCargoService {
     private void atualizar(Scanner scanner) {
 
         System.out.println("Cargos cadastrados:");
-
         this.visualizar();
-
         System.out.println("Digite o id do cargo que deseja atualizar:");
-
         Long id = scanner.nextLong();
         scanner.nextLine();
-
-        Cargo cargo = null;
-
-        for (Cargo c: cargos) {
-            if(c.getId().compareTo(id) == 0)
-            {
-                cargo = c;
-                break;
-            }
-        }
-
+        Cargo cargo = new Cargo();
         System.out.println("Qual descrição deseja inserir neste cargo?");
         String descricao = scanner.nextLine();
+        cargo.setId(id);
         cargo.setDescricao(descricao);
         cargoRepository.save(cargo);
         System.out.println("Atualizado");
