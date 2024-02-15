@@ -3,6 +3,8 @@ package estudo.alura.curso.springdatajpa;
 import estudo.alura.curso.springdatajpa.orm.Cargo;
 import estudo.alura.curso.springdatajpa.repository.iCargoRepository;
 import estudo.alura.curso.springdatajpa.service.CrudCargoService;
+import estudo.alura.curso.springdatajpa.service.CrudFuncionarioService;
+import estudo.alura.curso.springdatajpa.service.CrudUnidadeTrabalhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,9 +17,15 @@ public class SpringdatajpaApplication implements CommandLineRunner {
 
 	private Boolean system = true;
 	private final CrudCargoService cargoService;
+	private final CrudUnidadeTrabalhoService unidadeTrabalhoService;
+	private final CrudFuncionarioService funcionarioService;
 
-	public SpringdatajpaApplication(CrudCargoService cargoService) {
+	public SpringdatajpaApplication(CrudCargoService cargoService,
+									CrudUnidadeTrabalhoService unidadeTrabalhoService,
+									CrudFuncionarioService funcionarioService) {
 		this.cargoService = cargoService;
+		this.unidadeTrabalhoService = unidadeTrabalhoService;
+		this.funcionarioService = funcionarioService;
 	}
 
 	public static void main(String[] args) {
@@ -35,7 +43,9 @@ public class SpringdatajpaApplication implements CommandLineRunner {
 			Qual ação você quer executar?
 			
 			0 - Sair
-			1 - Cargo			
+			1 - Cargo
+			2 - Unidade de Trabalho
+			3 - Funcionario		
 			""");
 
 			int action = scanner.nextInt();
@@ -44,6 +54,14 @@ public class SpringdatajpaApplication implements CommandLineRunner {
 			switch (action) {
 				case  1 : {
 					cargoService.inicial(scanner);
+					break;
+				}
+				case  2 : {
+					unidadeTrabalhoService.inicial(scanner);
+					break;
+				}
+				case  3 : {
+					funcionarioService.inicial(scanner);
 					break;
 				}
 				default: {

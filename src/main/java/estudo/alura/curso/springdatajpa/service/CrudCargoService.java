@@ -4,6 +4,7 @@ import estudo.alura.curso.springdatajpa.orm.Cargo;
 import estudo.alura.curso.springdatajpa.repository.iCargoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
@@ -25,7 +26,9 @@ public class CrudCargoService {
                     			
                     0 - Sair
                     1 - Salvar
-                    2 - Atualizar                    			
+                    2 - Atualizar    
+                    3 - Visualizar     
+                    4 - Deletar           			
                     """);
 
             int action = scanner.nextInt();
@@ -38,6 +41,14 @@ public class CrudCargoService {
                 }
                 case 2: {
                     this.atualizar(scanner);
+                    break;
+                }
+                case 3: {
+                    this.visualizar();
+                    break;
+                }
+                case 4: {
+                    this.deletar(scanner);
                     break;
                 }
                 default: {
@@ -76,7 +87,23 @@ public class CrudCargoService {
 
     private void visualizar() {
         Iterable<Cargo> cargos = this.cargoRepository.findAll();
-        cargos.forEach(c -> System.out.println(c.getId()+" - "+c.getDescricao()));
+        cargos.forEach(System.out::println);
+    }
+
+    private void deletar(Scanner scanner) {
+        this.visualizar();
+        System.out.println("Qual o id do cargo que você deseja deletar?");
+        Long id = scanner.nextLong();
+        scanner.nextLine();
+        this.cargoRepository.deleteById(id);
+        System.out.println("Deletado");
+    }
+
+    public Optional<Cargo> buscarPorId(Scanner scanner) {
+        this.visualizar();
+        System.out.println("Qual cargo deseja retornar?");
+        Long id = scanner.nextLong();
+        return this.cargoRepository.findById(id);
     }
 
 }
