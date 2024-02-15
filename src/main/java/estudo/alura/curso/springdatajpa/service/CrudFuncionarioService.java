@@ -4,6 +4,10 @@ import estudo.alura.curso.springdatajpa.orm.Cargo;
 import estudo.alura.curso.springdatajpa.orm.Funcionario;
 import estudo.alura.curso.springdatajpa.orm.UnidadeTrabalho;
 import estudo.alura.curso.springdatajpa.repository.iFuncionarioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -54,7 +58,7 @@ public class CrudFuncionarioService {
                     break;
                 }
                 case 3: {
-                    this.visualizar();
+                    this.visualizar(scanner);
                     break;
                 }
                 case 4: {
@@ -91,7 +95,7 @@ public class CrudFuncionarioService {
     private void atualizar(Scanner scanner) {
 
         System.out.println("Funcionarios cadastrados:");
-        this.visualizar();
+        this.visualizar(scanner);
         System.out.println("Digite o id do funcionario que deseja atualizar:");
         Long id = scanner.nextLong();
         scanner.nextLine();
@@ -119,13 +123,19 @@ public class CrudFuncionarioService {
 
     }
 
-    private void visualizar() {
-        Iterable<Funcionario> funcionarios = this.funcionarioRepository.findAll();
+    private void visualizar(Scanner scanner) {
+        System.out.println("Qual página você deseja visualizar?");
+        int page = scanner.nextInt();
+        Pageable pageable = PageRequest.of(page,5, Sort.by(Sort.Direction.ASC, "nome"));
+        Page<Funcionario> funcionarios = this.funcionarioRepository.findAll(pageable);
+        System.out.println(funcionarios.getTotalPages()+" paginas disponíveis");
+        System.out.println("Página atual - "+funcionarios.getNumber());
+        System.out.println("Total de elementos - "+funcionarios.getTotalElements());
         funcionarios.forEach(System.out::println);
     }
 
     private void deletar(Scanner scanner) {
-        this.visualizar();
+        this.visualizar(scanner);
         System.out.println("Qual o id do funcionario que você deseja deletar?");
         Long id = scanner.nextLong();
         scanner.nextLine();

@@ -1,6 +1,8 @@
 package estudo.alura.curso.springdatajpa.orm;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +23,8 @@ public class Funcionario {
     @ManyToOne
     @JoinColumn(name = "cargo_id")
     private Cargo cargo;
+
+    @Fetch(FetchMode.JOIN)
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "funcionarios_unidades_trabalho",
             joinColumns = @JoinColumn(name = "funcionario_id", referencedColumnName = "id"),
