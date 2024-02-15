@@ -2,6 +2,7 @@ package estudo.alura.curso.springdatajpa.repository;
 
 import estudo.alura.curso.springdatajpa.orm.Cargo;
 import estudo.alura.curso.springdatajpa.orm.Funcionario;
+import estudo.alura.curso.springdatajpa.orm.FuncionarioProjecao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -43,5 +44,8 @@ public interface iFuncionarioRepository extends JpaRepository<Funcionario,Long> 
     @Query(value = "SELECT f.* FROM Funcionarios f WHERE f.data_contratacao >= :dataReferencia", nativeQuery = true)
     List<Funcionario> funcionarioPorDataContratacaoMaiorQue(LocalDate dataReferencia);
 
+    @Query(value = "SELECT f.id, f.nome, f.salario FROM funcionarios f",
+           nativeQuery = true)
+    List<FuncionarioProjecao> findFuncionarioSalario();
 
 }

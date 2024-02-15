@@ -1,6 +1,7 @@
 package estudo.alura.curso.springdatajpa.service;
 
 import estudo.alura.curso.springdatajpa.orm.Funcionario;
+import estudo.alura.curso.springdatajpa.orm.FuncionarioProjecao;
 import estudo.alura.curso.springdatajpa.repository.iFuncionarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,8 @@ public class RelatoriosService {
                     0 - Sair
                     1 - Buscar funcionário por nome   
                     2 - Buscar funcionario por nome, data de contratação e salário maior que...    
-                    3 - Buscar funcionários com data de contratação maior que...			
+                    3 - Buscar funcionários com data de contratação maior que...		
+                    4 - Pesquisa funcionário salário			
                     """);
 
             int action = scanner.nextInt();
@@ -48,6 +50,10 @@ public class RelatoriosService {
                 }
                 case 3: {
                     this.buscarFuncionariosPorDataDeContratacaoMaiorQue(scanner);
+                    break;
+                }
+                case 4: {
+                    this.pesquisaFuncionarioSalario();
                     break;
                 }
                 default: {
@@ -83,6 +89,11 @@ public class RelatoriosService {
         LocalDate dataContratacao = LocalDate.parse(data, formatter);
         List<Funcionario> funcionarios = this.funcionarioRepository.funcionarioPorDataContratacaoMaiorQue(dataContratacao);
         funcionarios.forEach(System.out::println);
+    }
+
+    private void pesquisaFuncionarioSalario() {
+        List<FuncionarioProjecao> lista = funcionarioRepository.findFuncionarioSalario();
+        lista.forEach(f -> System.out.println("Funcionario - Id: "+f.getId()+ " | Nome: " + f.getNome() + " | Salario: " + f.getSalario()));
     }
 
 }
