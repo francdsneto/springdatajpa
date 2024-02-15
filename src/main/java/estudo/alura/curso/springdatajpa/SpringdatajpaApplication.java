@@ -2,10 +2,7 @@ package estudo.alura.curso.springdatajpa;
 
 import estudo.alura.curso.springdatajpa.orm.Cargo;
 import estudo.alura.curso.springdatajpa.repository.iCargoRepository;
-import estudo.alura.curso.springdatajpa.service.CrudCargoService;
-import estudo.alura.curso.springdatajpa.service.CrudFuncionarioService;
-import estudo.alura.curso.springdatajpa.service.CrudUnidadeTrabalhoService;
-import estudo.alura.curso.springdatajpa.service.RelatoriosService;
+import estudo.alura.curso.springdatajpa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,15 +18,18 @@ public class SpringdatajpaApplication implements CommandLineRunner {
 	private final CrudUnidadeTrabalhoService unidadeTrabalhoService;
 	private final CrudFuncionarioService funcionarioService;
 	private final RelatoriosService relatoriosService;
+	private final RelatorioFuncionarioDinamico relatorioFuncionarioDinamico;
 
 	public SpringdatajpaApplication(CrudCargoService cargoService,
 									CrudUnidadeTrabalhoService unidadeTrabalhoService,
 									CrudFuncionarioService funcionarioService,
-									RelatoriosService relatoriosService) {
+									RelatoriosService relatoriosService,
+									RelatorioFuncionarioDinamico relatorioFuncionarioDinamico) {
 		this.cargoService = cargoService;
 		this.unidadeTrabalhoService = unidadeTrabalhoService;
 		this.funcionarioService = funcionarioService;
 		this.relatoriosService = relatoriosService;
+		this.relatorioFuncionarioDinamico = relatorioFuncionarioDinamico;
 	}
 
 	public static void main(String[] args) {
@@ -51,6 +51,7 @@ public class SpringdatajpaApplication implements CommandLineRunner {
 			2 - Unidade de Trabalho
 			3 - Funcionario		
 			4 - Relatorio
+			5 - Relatorio Dinamico
 			""");
 
 			int action = scanner.nextInt();
@@ -71,6 +72,10 @@ public class SpringdatajpaApplication implements CommandLineRunner {
 				}
 				case  4 : {
 					relatoriosService.inicial(scanner);
+					break;
+				}
+				case  5 : {
+					relatorioFuncionarioDinamico.inicial(scanner);
 					break;
 				}
 				default: {
